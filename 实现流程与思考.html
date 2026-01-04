@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华人创业公司筛选评估流程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .core-insights {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            padding: 30px;
+            background: #f8f8f8;
+            border: 1px solid #1a1a1a;
+        }
+
+        .insight-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .insight-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: #1a1a1a;
+        }
+
+        .insight-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .insight-value {
+            font-size: 20px;
+            font-weight: 300;
+            color: #1a1a1a;
+        }
+
+        .barrier-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .barrier-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .barrier-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .barrier-label {
+            font-weight: 500;
+            margin-right: 8px;
+            min-width: 80px;
+            color: #333;
+        }
+
+        .barrier-desc {
+            color: #666;
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .flow-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .stage {
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .stage-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .stage-number {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 300;
+            margin-right: 20px;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stage-title {
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .stage-description {
+            font-size: 13px;
+            color: #666;
+            margin-left: 70px;
+            margin-bottom: 20px;
+        }
+
+        .steps-container {
+            margin-left: 70px;
+            position: relative;
+        }
+
+        .step {
+            background: white;
+            border: 1px solid #1a1a1a;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            position: absolute;
+            left: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 25px;
+            background: #1a1a1a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .step-detail {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .step-tag {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-top: 8px;
+            margin-right: 5px;
+            color: #555;
+        }
+
+        .vertical-line {
+            position: absolute;
+            left: 35px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #1a1a1a;
+        }
+
+        .arrow-down {
+            position: absolute;
+            left: 50%;
+            bottom: -50px;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #1a1a1a;
+        }
+
+        .arrow-down::after {
+            content: '↓';
+        }
+
+        .dimension-box {
+            background: white;
+            border: 1px solid #1a1a1a;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dimension-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .dimension-content {
+            flex: 1;
+        }
+
+        .dimension-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .dimension-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: #e0e0e0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1a1a1a;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .core-insights {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .insight-item {
+                padding: 15px 0;
+            }
+
+            .insight-item:not(:last-child)::after {
+                display: none;
+            }
+
+            .insight-item:not(:last-child) {
+                border-bottom: 1px solid #1a1a1a;
+            }
+
+            .barrier-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .barrier-label {
+                margin-bottom: 5px;
+                min-width: auto;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .stage-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stage-number {
+                margin-bottom: 10px;
+            }
+
+            .steps-container {
+                margin-left: 20px;
+            }
+
+            .step-number {
+                left: -25px;
+            }
+
+            .vertical-line {
+                left: 25px;
+            }
+        }
+
+        .highlight {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { border-color: #1a1a1a; }
+            50% { border-color: #666; }
+            100% { border-color: #1a1a1a; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>华人创业公司筛选评估流程</h1>
+            <p>从学术研究到市场分析的完整方法论</p>
+        </div>
+
+        <div class="core-insights">
+            <div class="insight-item">
+                <div class="insight-title">工程</div>
+                <div class="insight-value">稳定</div>
+            </div>
+            <div class="insight-item">
+                <div class="insight-title">指标</div>
+                <div class="insight-value">标准</div>
+            </div>
+            <div class="insight-item">
+                <div class="insight-title">壁垒</div>
+                <div class="insight-value">
+                    过去，现在，未来
+                    <div class="barrier-details">
+                        <div class="barrier-item">
+                            <div class="barrier-label">时间快照</div>
+                            <div class="barrier-desc">成长模式</div>
+                        </div>
+                        <div class="barrier-item">
+                            <div class="barrier-label">相对估值</div>
+                            <div class="barrier-desc">专家经验</div>
+                        </div>
+                        <div class="barrier-item">
+                            <div class="barrier-label">范式转变</div>
+                            <div class="barrier-desc">窗口压缩</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-container">
+            <!-- 阶段一 -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">一</div>
+                    <div class="stage-title">学者初筛与定位</div>
+                </div>
+                <div class="stage-description">通过大规模搜索和筛选，定位高质量学者资源</div>
+                
+                <div class="steps-container">
+                    <div class="vertical-line"></div>
+                    
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">1</div>
+                        <div class="step-title">
+                            <span class="step-icon">🔍</span>
+                            大规模初步搜索
+                        </div>
+                        <div class="step-detail">
+                            使用 Google Scholar (GS) 进行大批量的关键词搜索，覆盖相关领域的学术资源
+                        </div>
+                        <div class="step-tag">关键词搜索</div>
+                        <div class="step-tag">批量处理</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">2</div>
+                        <div class="step-title">
+                            <span class="step-icon">📊</span>
+                            第一轮筛选
+                        </div>
+                        <div class="step-detail">
+                            根据论文引用量或相关性，筛选出第一批高质量的学者（例如，排名前 10% 的文章）
+                        </div>
+                        <div class="step-tag">引用量筛选</div>
+                        <div class="step-tag">相关性排序</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">3</div>
+                        <div class="step-title">
+                            <span class="step-icon">👤</span>
+                            作者定位
+                        </div>
+                        <div class="step-detail">
+                            对筛选出的文章作者进行二次筛选，重点筛选出拥有 GS 主页的作者
+                        </div>
+                        <div class="step-tag">主页验证</div>
+                        <div class="step-tag">作者识别</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">4</div>
+                        <div class="step-title">
+                            <span class="step-icon">🔗</span>
+                            URL 采集
+                        </div>
+                        <div class="step-detail">
+                            采集这些 GS 主页的 URL 链接，建立学者数据库
+                        </div>
+                        <div class="step-tag">数据采集</div>
+                        <div class="step-tag">链接管理</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">5</div>
+                        <div class="step-title">
+                            <span class="step-icon">🔄</span>
+                            数据去重
+                        </div>
+                        <div class="step-detail">
+                            以采集到的 URL 作为唯一标识进行去重，得到独特的学者列表
+                        </div>
+                        <div class="step-tag">去重算法</div>
+                        <div class="step-tag">数据清洗</div>
+                    </div>
+                </div>
+                <div class="arrow-down"></div>
+            </div>
+
+            <!-- 阶段二 -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">二</div>
+                    <div class="stage-title">华人身份确认与信息提取</div>
+                </div>
+                <div class="stage-description">通过AI识别和深度抓取，确认华人身份并提取关键信息</div>
+                
+                <div class="steps-container">
+                    <div class="vertical-line"></div>
+                    
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">6</div>
+                        <div class="step-title">
+                            <span class="step-icon">🤖</span>
+                            华人身份反向筛选
+                        </div>
+                        <div class="step-detail">
+                            利用大语言模型（LLM）对学者姓名列表进行反向判断，识别并剔除名单中非华人（或疑似非华人）的学者
+                        </div>
+                        <div class="step-tag">LLM分析</div>
+                        <div class="step-tag">身份识别</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">7</div>
+                        <div class="step-title">
+                            <span class="step-icon">📥</span>
+                            主页信息抓取
+                        </div>
+                        <div class="step-detail">
+                            登录并进入每一个独特的学者主页和其个人网站，抓取详细信息，包括：姓名、所属机构、创始人/联合创始人身份、h-index、function 等
+                        </div>
+                        <div class="step-tag">深度抓取</div>
+                        <div class="step-tag">结构化数据</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">8</div>
+                        <div class="step-title">
+                            <span class="step-icon">🎯</span>
+                            职位关键词精确搜索
+                        </div>
+                        <div class="step-detail">
+                            在抓取到的信息中，使用加空格的关键词（例如 CTO）来精确搜索创始人的特定职位信息
+                        </div>
+                        <div class="step-tag">关键词匹配</div>
+                        <div class="step-tag">职位识别</div>
+                    </div>
+                </div>
+                <div class="arrow-down"></div>
+            </div>
+
+            <!-- 阶段三 -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">三</div>
+                    <div class="stage-title">创业公司名单确定</div>
+                </div>
+                <div class="stage-description">筛选出真正的创业公司，建立目标名单</div>
+                
+                <div class="steps-container">
+                    <div class="vertical-line"></div>
+                    
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">9</div>
+                        <div class="step-title">
+                            <span class="step-icon">❌</span>
+                            剔除非目标公司
+                        </div>
+                        <div class="step-detail">
+                            从已确定的创始人名单中，剔除非创业公司或已上市/成熟公司的任职者
+                        </div>
+                        <div class="step-tag">公司类型筛选</div>
+                        <div class="step-tag">发展阶段判断</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">10</div>
+                        <div class="step-title">
+                            <span class="step-icon">📋</span>
+                            初步名单生成
+                        </div>
+                        <div class="step-detail">
+                            得到一个聚焦于华人创业公司的初步目标名单（例如，一个 14 人的名单）
+                        </div>
+                        <div class="step-tag">名单生成</div>
+                        <div class="step-tag">目标聚焦</div>
+                    </div>
+                </div>
+                <div class="arrow-down"></div>
+            </div>
+
+            <!-- 阶段四 -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">四</div>
+                    <div class="stage-title">多维度评估与深度分析</div>
+                </div>
+                <div class="stage-description">通过多维度指标和深度分析，确定最终推荐名单</div>
+                
+                <div class="steps-container">
+                    <div class="vertical-line"></div>
+                    
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">11</div>
+                        <div class="step-title">
+                            <span class="step-icon">📐</span>
+                            确定评估维度
+                        </div>
+                        <div class="step-detail">
+                            设定三个核心评估维度：学术成就、社区贡献、市场声量
+                        </div>
+                        <div class="step-tag">维度定义</div>
+                        <div class="step-tag">评估框架</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">12</div>
+                        <div class="step-title">
+                            <span class="step-icon">📈</span>
+                            指标采集与量化
+                        </div>
+                        <div class="step-detail">
+                            <div style="margin-top: 10px;">
+                                <div class="dimension-box">
+                                    <div class="dimension-icon">🎓</div>
+                                    <div class="dimension-content">
+                                        <div class="dimension-title">学术成就</div>
+                                        <div class="dimension-desc">衡量创始人背景、H-index 等</div>
+                                    </div>
+                                </div>
+                                <div class="dimension-box">
+                                    <div class="dimension-icon">👥</div>
+                                    <div class="dimension-content">
+                                        <div class="dimension-title">社区贡献</div>
+                                        <div class="dimension-desc">GitHub Star/Fork 数，Hugging Face 模型上传量和下载量</div>
+                                    </div>
+                                </div>
+                                <div class="dimension-box">
+                                    <div class="dimension-icon">📢</div>
+                                    <div class="dimension-content">
+                                        <div class="dimension-title">市场声量</div>
+                                        <div class="dimension-desc">Twitter/X 粉丝影响力、高参与度评论数</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-tag">数据采集</div>
+                        <div class="step-tag">量化分析</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">13</div>
+                        <div class="step-title">
+                            <span class="step-icon">⚖️</span>
+                            加权排名
+                        </div>
+                        <div class="step-detail">
+                            对三个维度的指标进行加权（学术和社区权重较高），进行整体排名
+                        </div>
+                        <div class="step-tag">权重分配</div>
+                        <div class="step-tag">综合评分</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">14</div>
+                        <div class="step-title">
+                            <span class="step-icon">🏆</span>
+                            选取头部公司
+                        </div>
+                        <div class="step-detail">
+                            选取排名前五的公司/个人进行下一轮深度分析
+                        </div>
+                        <div class="step-tag">TOP 5 筛选</div>
+                        <div class="step-tag">深度分析准备</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">15</div>
+                        <div class="step-title">
+                            <span class="step-icon">🔬</span>
+                            深度市场分析
+                        </div>
+                        <div class="step-detail">
+                            对前五名进行进一步的爆款评论量分析，通过程序自动或手动抓取其帖子中达到高阈值（如 >50 条评论）的具体数量
+                        </div>
+                        <div class="step-tag">评论分析</div>
+                        <div class="step-tag">影响力评估</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">16</div>
+                        <div class="step-title">
+                            <span class="step-icon">📰</span>
+                            新闻信息收集
+                        </div>
+                        <div class="step-detail">
+                            搜集目标公司相关的最新新闻和报道
+                        </div>
+                        <div class="step-tag">新闻采集</div>
+                        <div class="step-tag">舆情监控</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">17</div>
+                        <div class="step-title">
+                            <span class="step-icon">🤖</span>
+                            LLM 新闻打分
+                        </div>
+                        <div class="step-detail">
+                            逐篇输入新闻文章，利用 LLM 进行总结和评分，以衡量舆论情绪和文章质量
+                        </div>
+                        <div class="step-tag">AI分析</div>
+                        <div class="step-tag">情绪评分</div>
+                    </div>
+
+                    <div class="step" onclick="highlightStep(this)">
+                        <div class="step-number">18</div>
+                        <div class="step-title">
+                            <span class="step-icon">🎯</span>
+                            最终排序
+                        </div>
+                        <div class="step-detail">
+                            将多维度评估分数和新闻/舆论评分进行结合，得出最终的排序结果和推荐名单
+                        </div>
+                        <div class="step-tag">综合排名</div>
+                        <div class="step-tag">推荐名单</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 进度条更新
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progressFill').style.width = scrollPercent + '%';
+        }
+
+        window.addEventListener('scroll', updateProgressBar);
+        window.addEventListener('resize', updateProgressBar);
+
+        // 点击步骤高亮效果
+        function highlightStep(element) {
+            // 移除所有高亮
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('highlight');
+            });
+            // 添加高亮到当前元素
+            element.classList.add('highlight');
+            
+            // 3秒后移除高亮
+            setTimeout(() => {
+                element.classList.remove('highlight');
+            }, 3000);
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', function(e) {
+                if (e.target.closest('.step')) {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+
+        // 初始化
+        updateProgressBar();
+    </script>
+</body>
+</html>
